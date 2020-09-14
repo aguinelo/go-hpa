@@ -7,8 +7,8 @@ steps:
 
 - id: "Image Build"
   name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/aguinelo_gohpa:latest', './go']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/go-hpa:latest', './go']
   
 images:
-  
-  - 'gcr.io/$PROJECT_ID/aguinelo_gohpa:latest'
+
+  - 'gcr.io/$PROJECT_ID/go-hpa:latest'
