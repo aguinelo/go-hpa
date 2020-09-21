@@ -9,8 +9,6 @@ ENV CGO_ENABLED=0
 
 RUN go build 
 
-RUN ls -la
-
 FROM scratch
 
 COPY --from=builder /go-hpa .
