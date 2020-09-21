@@ -10,3 +10,4 @@ spec:
     kind: Deployment
     name: go-hpa
   targetCPUUtilizationPercentage: 20
+  
