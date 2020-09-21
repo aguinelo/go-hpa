@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func MainRequestHandler(w http.ResponseWriter, r *http.Request) {
 	x := 0.0001
 
 	for i := 0; i < 1000000; i++ {
@@ -18,6 +18,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/", MainRequestHandler)
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }

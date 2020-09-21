@@ -1,26 +1,29 @@
 package main
 
 import (
-	"io/ioutil"
-	"os"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 )
 
-func TestMain(t *testing.T) {
-	rescueStdout := os.Stdout
-	r, w, _ := os.Pipe()
-	os.Stdout = w
-
-	main()
-
-	w.Close()
-	out, err := ioutil.ReadAll(r)
+func TestMainRequestHandler(t *testing.T) {
+	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
-		t.Error("Não foi possivel ler a saida")
+		t.Fatal(err)
 	}
-	os.Stdout = rescueStdout
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(MainRequestHandler)
 
-	if string(out) == "Code.education Rocks!" {
-		t.Errorf("Expected %s, got %s", "Code.education Rocks!: test", out)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("http status inesperado: retornou %v esperava %v",
+			status, http.StatusOK)
+	}
+
+	expected := `Code.education Rocks!`
+	if rr.Body.String() != expected {
+		t.Errorf("retorno inesperado: retornou %v esperava %v",
+			rr.Body.String(), expected)
 	}
 }
